@@ -29,6 +29,7 @@ class StockSettings(Document):
 		allow_from_pr: DF.Check
 		allow_negative_stock: DF.Check
 		allow_partial_reservation: DF.Check
+		allow_to_edit_serial_no_qty: DF.Check
 		allow_to_edit_stock_uom_qty_for_purchase: DF.Check
 		allow_to_edit_stock_uom_qty_for_sales: DF.Check
 		auto_create_serial_and_batch_bundle_for_outward: DF.Check

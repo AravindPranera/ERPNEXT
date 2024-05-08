@@ -130,23 +130,39 @@ frappe.ui.form.on("Serial and Batch Bundle", {
 	},
 
 	toggle_fields(frm) {
-		if (frm.doc.has_serial_no) {
-			frm.doc.entries.forEach((row) => {
-				if (Math.abs(row.qty) !== 1) {
-					frappe.model.set_value(row.doctype, row.name, "qty", 1);
+        frappe.db.get_single_value('Stock Settings', 'allow_to_edit_serial_no_qty')
+		.then(value => {
+			if(value === 0){
+				if (frm.doc.has_serial_no) {
+					frm.doc.entries.forEach((row) => {
+						if (Math.abs(row.qty) !== 1) {
+							frappe.model.set_value(row.doctype, row.name, "qty", 1);
+						}
+					});
 				}
-			});
-		}
+				frm.fields_dict.entries.grid.update_docfield_property(
+					"serial_no",
+					"read_only",
+					!frm.doc.has_serial_no
+				);
 
-		frm.fields_dict.entries.grid.update_docfield_property(
-			"serial_no",
-			"read_only",
-			!frm.doc.has_serial_no
-		);
+				frm.fields_dict.entries.grid.update_docfield_property("batch_no", "read_only", !frm.doc.has_batch_no);
 
-		frm.fields_dict.entries.grid.update_docfield_property("batch_no", "read_only", !frm.doc.has_batch_no);
+				frm.fields_dict.entries.grid.update_docfield_property("qty", "read_only", frm.doc.has_serial_no);
 
-		frm.fields_dict.entries.grid.update_docfield_property("qty", "read_only", frm.doc.has_serial_no);
+			}else{
+				frm.fields_dict.entries.grid.update_docfield_property(
+					"serial_no",
+					"read_only",
+					!frm.doc.has_serial_no
+				);
+
+				frm.fields_dict.entries.grid.update_docfield_property("batch_no", "read_only", !frm.doc.has_batch_no);
+
+			}
+		});
+		
+		
 	},
 
 	set_queries(frm) {

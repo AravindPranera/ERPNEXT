@@ -214,8 +214,11 @@ class SerialandBatchBundle(Document):
 
 	def calculate_total_qty(self, save=True):
 		self.total_qty = 0.0
-		for d in self.entries:
-			d.qty = 1 if self.has_serial_no and abs(d.qty) > 1 else abs(d.qty) if d.qty else 0
+		allow_to_edit_serial_no_qty = frappe.db.get_single_value(
+			"Stock Settings", "allow_to_edit_serial_no_qty"
+		)
+		for d in self.entries:	
+			d.qty = 1 if self.has_serial_no and abs(d.qty) > 1 and allow_to_edit_serial_no_qty == 0 else abs(d.qty) if d.qty else 0
 			d.stock_value_difference = abs(d.stock_value_difference) if d.stock_value_difference else 0
 			if self.type_of_transaction == "Outward":
 				d.qty *= -1

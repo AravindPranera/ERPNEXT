@@ -270,8 +270,10 @@ class StockController(AccountsController):
 			)
 			serial_nos = sorted([cstr(d.serial_no) for d in serial_nos])
 			parsed_serial_nos = get_serial_nos(row.serial_no)
+			
+			allow_to_edit_serial_no_qty = frappe.db.get_single_value("Stock Settings", "allow_to_edit_serial_no_qty")
 
-			if len(serial_nos) != len(parsed_serial_nos):
+			if len(serial_nos) != len(parsed_serial_nos) and allow_to_edit_serial_no_qty == 0:
 				throw_error = True
 			elif serial_nos != parsed_serial_nos:
 				for serial_no in serial_nos:

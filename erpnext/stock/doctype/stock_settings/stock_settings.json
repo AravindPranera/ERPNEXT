@@ -52,6 +52,7 @@
   "naming_series_prefix",
   "use_serial_batch_fields",
   "do_not_update_serial_batch_on_creation_of_auto_bundle",
+  "allow_to_edit_serial_no_qty",
   "stock_planning_tab",
   "auto_material_request",
   "auto_indent",
@@ -437,6 +438,13 @@
    "fieldname": "do_not_update_serial_batch_on_creation_of_auto_bundle",
    "fieldtype": "Check",
    "label": "Do Not Update Serial / Batch on Creation of Auto Bundle"
+  },
+  {
+   "default": "0",
+   "description": "If  enabled, allow to edit the serial no qty and consider it as a weight in the Serial and Batch Bundle.",
+   "fieldname": "allow_to_edit_serial_no_qty",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Serial No Qty"
   }
  ],
  "icon": "icon-cog",
@@ -444,7 +452,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-02-25 16:32:01.084453",
+ "modified": "2024-05-07 11:37:45.087854",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",
